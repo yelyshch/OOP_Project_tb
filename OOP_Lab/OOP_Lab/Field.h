@@ -15,5 +15,13 @@ public:
     void placeHero();
     void placeObstacles(int obstacleCount);
     void placeMonsters(int monsterCount);
+    // Copy Constructor
+    Field(const Field& other);
+    // Copy Assignment Operator
+    Field& operator=(const Field& other);
+    // Move Constructor
+    Field(Field&& other) noexcept;
+    // Move Assignment Operator
+    Field& operator=(Field&& other) noexcept;
     ~Field();
 };
