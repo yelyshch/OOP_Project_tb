@@ -9,10 +9,12 @@ private:
 
     Field* gameField;
 
+    int DiceRoll();
     void createField(int fieldWidth, int fieldHeight, int obstacles, int monster);
     void generationObjects(int obst, int monst);
 
 public:
     Manager();
     ~Manager();
+
 };

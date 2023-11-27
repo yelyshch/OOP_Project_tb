@@ -1,4 +1,5 @@
 #include "Field.h"
+
 #include <cstdlib> // for rand()
 
 bool Field::isWithinBounds(int x, int y) const {
@@ -114,6 +115,10 @@ Field& Field::operator=(Field&& other) noexcept {
         other.cells = nullptr;
     }
     return *this;
+}
+
+bool Field::freeCell(int x, int y) const {
+    return isWithinBounds(x, y) && !cells[y][x].hasObstacle() && !cells[y][x].hasUnitPresent();
 }
 
 Field::~Field() {

@@ -7,14 +7,15 @@ private:
     int height;
     Cell** cells;
 
-    bool isWithinBounds(int x, int y) const;
     bool isCellFreeAroundHero(int heroX, int heroY) const;
 
 public:
     Field(int m, int n);
+    bool isWithinBounds(int x, int y) const; // було private
     void placeHero();
     void placeObstacles(int obstacleCount);
     void placeMonsters(int monsterCount);
+    bool freeCell(int x, int y) const;
     // Copy Constructor
     Field(const Field& other);
     // Copy Assignment Operator

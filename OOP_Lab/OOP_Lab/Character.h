@@ -1,47 +1,34 @@
+#pragma once
 #ifndef OOP_LAB_CHARACTER_H
 #define OOP_LAB_CHARACTER_H
 
 #include <iostream>
-#include <stdlib.h> //рандомайз
+#include <cstdlib>
 #include <ctime>
-#include <windows.h>
+#include "Field.h"
+
+const int maxValue = 6;
+const int startValue = 1;
 
 class Character {
 private:
+    int char_x, char_y;
     int health;
-    int damage;
     int protection;
-    int distance;
 
 protected:
     void setHealth(int value);
-    void setDamage(int value);
-    void setProtection(int value);
-    void setDistance(int value);
-
     int getHealth() const;
-    int getDamage() const;
+
+public:
+    int getX() const;
+    int getY() const;
+    void setX(int x);
+    void setY(int y);
+
+    void setProtection(int value);
     int getProtection() const;
-    int getDistance() const;
-
-public:
-    const int maxValue = 6;
-    Character(int health, int damage, int protection, int distance);
-
     void increaseHealth(int amount);
-    void increaseDamage(int amount);
-    void increaseProtection(int amount);
-    void increaseDistance(int amount);
-};
-
-class Hero : public Character {
-private:
-    int speed;
-
-public:
-    using Character::Character;
-    void diceResults(int firstRoll, int secondRoll, int thirdRoll);
-    void restoreHealth();
 };
 
 class Monster : public Character {
@@ -51,6 +38,39 @@ private:
 public:
     using Character::Character;
     void setActive(bool active);
+    using Character::getHealth;
+    using Character::setHealth;
 };
+
+class Hero : public Character {
+private:
+    int speed;
+    int damage;
+
+    int distance;
+
+public:
+    using Character::Character;
+    Hero() noexcept;
+
+    void setDamage(int value);
+    void setDistance(int value);
+    void setSpeed(int value);
+
+    int getDamage() const;
+
+    int getDistance() const;
+
+    void increaseDamage(int amount);
+    void increaseProtection(int amount);
+    void increaseDistance(int amount);
+
+    Hero(int health, int damage, int protection, int distance);
+    void diceResults(int firstRoll, int secondRoll, int thirdRoll);
+    void restoreHealth();
+    int move(int pos_X, int pos_Y, Field& gameField);
+    void attack(Monster& target, Field& gameField);
+};
+
 
 #endif //OOP_LAB_CHARACTER_H

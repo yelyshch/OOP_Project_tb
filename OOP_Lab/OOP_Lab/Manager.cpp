@@ -13,6 +13,10 @@ void Manager::generationObjects(int obst, int monst) {
     gameField->placeMonsters(monst);
 }
 
+int Manager::DiceRoll() {
+    return rand() % 6 + 1;
+}
+
 Manager::~Manager() {
     delete gameField;
 }
