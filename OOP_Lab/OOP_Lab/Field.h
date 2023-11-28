@@ -6,8 +6,8 @@ private:
     int width;
     int height;
     Cell** cells;
-
     bool isCellFreeAroundHero(int heroX, int heroY) const;
+    friend void PrintField(Field*);
 
 public:
     Field(int m, int n);

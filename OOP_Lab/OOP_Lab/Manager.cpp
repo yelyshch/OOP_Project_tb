@@ -1,6 +1,6 @@
 #include "Manager.h"
 
-Manager::Manager() : CurrentLevel(1), gameField(nullptr) {}
+Manager::Manager() : CurrentLevel(1), gameField(nullptr), PersoneName("") {}
 
 void Manager::createField(int fieldWidth, int fieldHeight, int obstacles, int monster) {
     gameField = new Field(fieldWidth, fieldHeight);
