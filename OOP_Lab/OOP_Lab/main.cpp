@@ -5,10 +5,11 @@
 #include "Manager.h"
 
 using std::string;
+using std::cout;
+using std::endl;
 
-int DiceRoll(int type_of_roll)
-{
-    return rand() % 6 + 1;
+void Test(Manager MainM){
+    cout<<"Current level="<<MainM.CurrentLevel<<endl;
 }
 
 int main()
@@ -16,5 +17,7 @@ int main()
     srand(static_cast<unsigned int>(time(NULL)));
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
+    Manager MainManager;
+    Test(MainManager);
     return 0;
 }
