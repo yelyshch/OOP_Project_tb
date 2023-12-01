@@ -19,11 +19,11 @@ void Hero::setDistance(int value) { distance = value; }
 void Hero::setSpeed(int value) { speed = value; }
 
 int Hero::getDamage() const { return damage; }
-
 int Hero::getDistance() const { return distance; }
+int Hero::getSpeed() const { return speed; }
 
 Hero::Hero() noexcept
-        : speed(startValue),
+        : speed(maxValue),
           damage(startValue),
           distance(2),
           Character() {

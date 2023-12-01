@@ -18,9 +18,9 @@ private:
 
 protected:
     void setHealth(int value);
-    int getHealth() const;
 
 public:
+    int getHealth() const;
     int getX() const;
     int getY() const;
     void setX(int x);
@@ -58,8 +58,8 @@ public:
     void setSpeed(int value);
 
     int getDamage() const;
-
     int getDistance() const;
+    int getSpeed() const;
 
     void increaseDamage(int amount);
     void increaseProtection(int amount);

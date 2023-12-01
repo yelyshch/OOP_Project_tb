@@ -1,4 +1,5 @@
 #pragma once
+#include "Character.h"
 #include "Field.h"
 #include <string>
 
@@ -6,7 +7,7 @@ class Manager {
 private:
     std::string PersoneName;
     int CurrentLevel;
-
+    Hero Player;
     Field* gameField;
 
     int DiceRoll();
