@@ -35,7 +35,7 @@ Hero::Hero() noexcept
     setDistance(2);
     setSpeed(maxValue);
     setHealth(maxValue);
-    setProtection(3);
+    setProtection(1);
     setDamage(maxValue);
 }
 
@@ -81,7 +81,6 @@ int Hero::move(int new_x, int new_y, Field* gameField) {
 }
 
 void Hero::attack(Monster& target, Field* gameField) {
-
     int target_x = target.getX();
     int target_y = target.getY();
 
@@ -100,24 +99,24 @@ void Hero::attack(Monster& target, Field* gameField) {
             moveCost = std::max(deltaX, deltaY) + 1;
         } else {}
     }
-    if (moveCost <= getDistance()) {
 
+    if (moveCost <= getDistance()) {
         int damageNeeded = target.getProtection();
 
         // check if the hero has enough damage points to attack
-        if (getDamage() >= damageNeeded) {
+        if (getDamage() > damageNeeded) {
             int damageDealt = getDamage() - damageNeeded;
             target.setHealth(target.getHealth() - damageDealt);
 
             if (target.getHealth() <= 0) {
                 target.setHealth(0);
+                gameField->eraseContent(target.getX(),target.getY()); // затерли клітинку
                 target.setActive(false);
-                gameField->eraseContent(target.getX(),target.getY());
             }
-        } else {
         }
     }
 }
+
 
 void Hero::restoreHealth() { setHealth(maxValue); }
 
@@ -128,8 +127,8 @@ Monster::Monster() noexcept {
     Manager main;
     setSpeed(6);
     setProtection(1);
-    setDamage(12);
-    setHealth(10);
+    setDamage(7);
+    setHealth(12);
     setX(0);
     setY(0);
     setActive(true);

@@ -10,10 +10,11 @@ void Field::moveHero(int x, int y) {
         cells[y][x].setUnitPresent(true);
     }
 }
+
 void Field::eraseContent(int x, int y) {
     if (isWithinBounds(x, y)) {
-        cells[y][x].setObstacle(false);
         cells[y][x].setUnitPresent(false);
+        cells[y][x].setObstacle(false);
     }
 }
 
@@ -73,6 +74,7 @@ void Field::placeNearHero() {
 
     if (isWithinBounds(heroX, newY) && freeCell(heroX, newY)) {
         monster->setY(newY);
+        monster->setX(heroX);
         moveUnit(*monster, heroX, newY);
         cells[newY][heroX].setUnitPresent(true);
     }
