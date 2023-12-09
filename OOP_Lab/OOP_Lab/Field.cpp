@@ -1,9 +1,20 @@
 #include "Field.h"
-
 #include <cstdlib> // for rand()
 
 bool Field::isWithinBounds(int x, int y) const {
     return x >= 0 && x < width && y >= 0 && y < height;
+}
+
+void Field::moveHero(int x, int y) {
+    if (isWithinBounds(x, y)) {
+        cells[y][x].setUnitPresent(true);
+    }
+}
+void Field::eraseContent(int x, int y) {
+    if (isWithinBounds(x, y)) {
+        cells[y][x].setObstacle(false);
+        cells[y][x].setUnitPresent(false);
+    }
 }
 
 bool Field::isCellFreeAroundHero(int heroX, int heroY) const {
@@ -24,12 +35,22 @@ Field::Field(int m, int n) : width(m), height(n) {
     for (int i = 0; i < height; ++i) {
         cells[i] = new Cell[width];
     }
+    hero = new Hero();
+    monster = new Monster;
 }
 
 void Field::placeHero() {
     int x = width / 2;
     int y = 1;
+    hero->setX(x);
+    hero->setY(y);
+    moveUnit(*hero, x, y);
     cells[y][x].setUnitPresent(true);
+}
+
+void Field::moveUnit(Character& unit, int new_x, int new_y) {
+    cells[unit.getY()][unit.getX()].setUnitPresent(false);
+    cells[new_y][new_x].setUnitPresent(true);
 }
 
 void Field::placeObstacles(int obstacleCount) {
@@ -44,22 +65,38 @@ void Field::placeObstacles(int obstacleCount) {
     }
 }
 
-void Field::placeMonsters(int monsterCount) {
-    for (int i = 0; i < monsterCount; ++i) {
-        int x, y;
-        do {
-            x = rand() % width;
-            y = rand() % height;
-        } while (!isCellFreeAroundHero(x, y));
+void Field::placeNearHero() {
+    int heroX = hero->getX();
+    int heroY = hero->getY();
 
-        cells[y][x].setUnitPresent(true);
+    int newY = heroY + 3;
+
+    if (isWithinBounds(heroX, newY) && freeCell(heroX, newY)) {
+        monster->setY(newY);
+        moveUnit(*monster, heroX, newY);
+        cells[newY][heroX].setUnitPresent(true);
     }
 }
 
+//void Field::placeMonsters(int monsterCount) {
+////    for (int i = 0; i < monsterCount; ++i) {
+//        int x, y;
+//        do {
+//            x = rand() % width;
+//            y = rand() % height;
+//        } while (!isCellFreeAroundHero(x, y));
+//
+//        monster->setX(x);
+//        monster->setY(y);
+//        moveUnit(*monster, x, y);
+//        cells[y][x].setUnitPresent(true);
+////    }
+//}
+
 Field::Field(const Field& other) : width(other.width), height(other.height) {
-    
+
     cells = new Cell * [height];
-    
+
     for (int i = 0; i < height; ++i) {
         cells[i] = new Cell[width];
         for (int j = 0; j < width; ++j) {
@@ -122,6 +159,9 @@ bool Field::freeCell(int x, int y) const {
 }
 
 Field::~Field() {
+    delete hero;
+    delete monster;
+
     for (int i = 0; i < height; ++i) {
         delete[] cells[i];
     }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Character.h"
 #include "Cell.h"
 
 class Field {
@@ -7,14 +8,15 @@ private:
     int height;
     Cell** cells;
     bool isCellFreeAroundHero(int heroX, int heroY) const;
-    friend void PrintField(Field*, int, int);
+    friend void PrintField(Field*);
 
 public:
+    Hero* hero;
+    Monster* monster;
     Field(int m, int n);
-    bool isWithinBounds(int x, int y) const; // було private
+    bool isWithinBounds(int x, int y) const;
     void placeHero();
     void placeObstacles(int obstacleCount);
-    void placeMonsters(int monsterCount);
     bool freeCell(int x, int y) const;
     // Copy Constructor
     Field(const Field& other);
@@ -25,4 +27,12 @@ public:
     // Move Assignment Operator
     Field& operator=(Field&& other) noexcept;
     ~Field();
+
+    void moveUnit(Character &unit, int new_x, int new_y);
+
+    void placeNearHero();
+
+    void eraseContent(int x, int y);
+
+    void moveHero(int x, int y);
 };

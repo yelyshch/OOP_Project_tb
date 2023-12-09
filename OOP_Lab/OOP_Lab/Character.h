@@ -5,72 +5,84 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "Field.h"
+#include <array>
+
+class Manager;
+class Monster;
 
 const int maxValue = 6;
 const int startValue = 1;
+
+class Field;
 
 class Character {
 private:
     int char_x, char_y;
     int health;
     int protection;
-
-protected:
-    void setHealth(int value);
+    int damage;
+    int speed;
 
 public:
+    int getDamage() const;
+    int getSpeed() const;
+    void reduceHealth(int amount);
     int getHealth() const;
     int getX() const;
     int getY() const;
     void setX(int x);
     void setY(int y);
 
+    void setHealth(int value);
+    void setDamage(int value);
     void setProtection(int value);
+    void setSpeed(int value);
     int getProtection() const;
     void increaseHealth(int amount);
-};
 
-class Monster : public Character {
-private:
-    bool active;
-
-public:
-    using Character::Character;
-    void setActive(bool active);
-    using Character::getHealth;
-    using Character::setHealth;
+    void increaseDamage(int amount);
+    void increaseProtection(int amount);
 };
 
 class Hero : public Character {
 private:
-    int speed;
-    int damage;
-
     int distance;
 
 public:
     using Character::Character;
+    using Character::getHealth;
+    using Character::reduceHealth;
     Hero() noexcept;
 
-    void setDamage(int value);
     void setDistance(int value);
-    void setSpeed(int value);
-
-    int getDamage() const;
     int getDistance() const;
-    int getSpeed() const;
 
-    void increaseDamage(int amount);
-    void increaseProtection(int amount);
     void increaseDistance(int amount);
-
-    Hero(int health, int damage, int protection, int distance);
-    void diceResults(int firstRoll, int secondRoll, int thirdRoll);
     void restoreHealth();
-    int move(int pos_X, int pos_Y, Field& gameField);
-    void attack(Monster& target, Field& gameField);
+    int move(int pos_X, int pos_Y, Field* gameField);
+    void attack(Monster& target, Field* gameField);
+
+    void diceResults();
 };
 
+class Monster : public Character {
+private:
+    bool active{};
 
-#endif //OOP_LAB_CHARACTER_H
+public:
+
+    using MonsterContainer = std::array<Monster, 5>;
+    using Character::Character;
+    Monster() noexcept;
+
+    void setActive(bool active);
+    bool isActive() const;
+    using Character::getHealth;
+    using Character::getDamage;
+    using Character::setHealth;
+    using Character::reduceHealth;
+
+    static void calculateMonsterAttack(Hero &hero, MonsterContainer &monsters);
+};
+
+#endif // OOP_LAB_CHARACTER_H

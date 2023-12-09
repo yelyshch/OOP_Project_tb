@@ -1,22 +1,25 @@
 #pragma once
-#include "Character.h"
+#ifndef OOP_LAB_MANAGER_H
+#define OOP_LAB_MANAGER_H
+
 #include "Field.h"
-#include <string>
+#include "Character.h"
 
 class Manager {
 private:
     std::string PersoneName;
-    int CurrentLevel;
-    Hero Player;
-    Field* gameField;
 
-    int DiceRoll();
-    void createField(int fieldWidth, int fieldHeight, int obstacles, int monster);
-    void generationObjects(int obst, int monst);
-    friend void TestLab1(Manager);
 
 public:
+    int CurrentLevel;
+    friend void TestLab1(Manager);
+    Field* gameField;
+
+    void generationObjects(int obst) const;
+    int getCurrentLevel() const;
+    void createField(int fieldWidth, int fieldHeight, int obstacles, int monster);
     Manager();
     ~Manager();
-
 };
+
+#endif // OOP_LAB_MANAGER_H

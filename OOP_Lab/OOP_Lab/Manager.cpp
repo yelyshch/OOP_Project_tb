@@ -1,20 +1,24 @@
 #include "Manager.h"
+#include "Character.h"
+#include <iostream>
+
+using namespace std;
 
 Manager::Manager() : CurrentLevel(1), gameField(nullptr), PersoneName("") {}
 
 void Manager::createField(int fieldWidth, int fieldHeight, int obstacles, int monster) {
     gameField = new Field(fieldWidth, fieldHeight);
-    generationObjects(obstacles, monster);
+    generationObjects(obstacles);
 }
 
-void Manager::generationObjects(int obst, int monst) {
+void Manager::generationObjects(int obst) const {
     gameField->placeHero();
+    gameField->placeNearHero();
     gameField->placeObstacles(obst);
-    gameField->placeMonsters(monst);
 }
 
-int Manager::DiceRoll() {
-    return rand() % 6 + 1;
+int Manager::getCurrentLevel() const{
+    return CurrentLevel;
 }
 
 Manager::~Manager() {
