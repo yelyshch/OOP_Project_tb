@@ -82,7 +82,7 @@ public:
     using Character::setHealth;
     using Character::reduceHealth;
 
-    static void calculateMonsterAttack(Hero &hero, MonsterContainer &monsters);
+    void calculateMonsterAttack(Hero &hero, MonsterContainer &monsters);
 };
 
 #endif // OOP_LAB_CHARACTER_H

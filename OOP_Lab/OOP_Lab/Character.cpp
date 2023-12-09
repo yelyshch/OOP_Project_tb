@@ -111,6 +111,7 @@ void Hero::attack(Monster& target, Field* gameField) {
 
             if (target.getHealth() <= 0) {
                 target.setHealth(0);
+                target.setActive(false);
                 gameField->eraseContent(target.getX(),target.getY());
             }
         } else {

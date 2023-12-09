@@ -20,7 +20,6 @@ public:
     // Destructor
     ~Cell();
 
-    // Rest of your existing declarations
     Cell();
 
     void setObstacle(bool obstacle);

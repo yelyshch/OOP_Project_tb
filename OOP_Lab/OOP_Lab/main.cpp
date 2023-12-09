@@ -44,10 +44,10 @@ void TestLab1(Manager mainManager) {
 
     mainManager.createField(FIELD_SIZE, FIELD_SIZE, 2, 1);
 
-    cout << "Current level = " << mainManager.CurrentLevel << endl;
+    cout << "Current level = " << mainManager.CurrentLevel << endl << endl;
     PrintField(mainManager.gameField);
 
-    display("Hero status before dice results", mainManager.gameField->hero);
+    display("\nHero status before dice results", mainManager.gameField->hero);
     cout << endl;
 
     mainManager.gameField->hero->diceResults();
@@ -58,12 +58,15 @@ void TestLab1(Manager mainManager) {
     display("Monster status", mainManager.gameField->monster);
     cout << ", active: " << (mainManager.gameField->monster->isActive() ? "yes" : "no") << endl << endl;
 
+
     Position newPosition = {2, 3};
     mainManager.gameField->hero->move(newPosition.x, newPosition.y, mainManager.gameField);
     PrintField(mainManager.gameField);
+    cout << endl;
 
     cout << "Hero attacks the monster" << endl;
     mainManager.gameField->hero->attack(*mainManager.gameField->monster, mainManager.gameField);
+    cout << endl;
 
     display("Monster status after attack", mainManager.gameField->monster);
     cout << ", active: " << (mainManager.gameField->monster->isActive() ? "yes" : "no") << endl << endl;
@@ -72,6 +75,14 @@ void TestLab1(Manager mainManager) {
     mainManager.gameField->monster->calculateMonsterAttack(*mainManager.gameField->hero, monsters);
 
     display("Hero status after counterattack", mainManager.gameField->hero);
+    cout << endl;
+
+    cout << "\nHero attacks the monster again" << endl;
+    mainManager.gameField->hero->attack(*mainManager.gameField->monster, mainManager.gameField);
+    display("Monster status after the second attack", mainManager.gameField->monster);
+    cout << ", active: " << (mainManager.gameField->monster->isActive() ? "yes" : "no") << endl;
+    cout << endl;
+    PrintField(mainManager.gameField);
     cout << endl;
 
     if (!mainManager.gameField->monster->isActive()) {
